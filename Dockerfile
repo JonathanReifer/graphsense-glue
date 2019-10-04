@@ -115,9 +115,13 @@ RUN  cd /root && wget https://github.com/graphsense/graphsense-clustering/archiv
 	sbt publishLocal
 
 ## graphsense-transformation
-RUN  cd /root && wget https://github.com/graphsense/graphsense-transformation/archive/v0.4.1.tar.gz && \
-	tar -zxf v0.4.1.tar.gz && \
-	cd graphsense-transformation-0.4.1 && \
+#RUN  cd /root && wget https://github.com/graphsense/graphsense-transformation/archive/v0.4.1.tar.gz && \
+#	tar -zxf v0.4.1.tar.gz && \
+#	cd graphsense-transformation-0.4.1 && \
+#	sbt compile && \
+#	sbt package
+RUN cd /root && git clone https://github.com/JonathanReifer/graphsense-transformation && \
+	cd graphsense-transformation && \
 	sbt compile && \
 	sbt package
 	
@@ -137,5 +141,5 @@ RUN apt-get update && \
 #	./scripts/tag_pack_tool.py ingest -d cassandra packs/*.yaml
 
 #START SPARK
-#WORKDIR $SPARK_HOME
-#CMD ["bin/spark-class", "org.apache.spark.deploy.master.Master"]
+WORKDIR $SPARK_HOME
+CMD ["bin/spark-class", "org.apache.spark.deploy.master.Master"]
